@@ -1,8 +1,17 @@
-import React from 'react'
-import {Text} from 'react-native';
+import React, {useEffect} from "react";
+import { View, Image, Text } from "react-native";
 
-export default function index() {
+export default function Details({route}) {
+  //const {uri, title} = route.params;
+  //useEffect(() => {
+    // fetch artwork details here
+  //}, []);
+
   return (
-    <Text>Details :)</Text>
-  )
+    <View>
+      {/*<Image source={{uri}}/>
+      <Text>{title}</Text>*/}
+      <Text>Todo :)</Text>
+    </View>
+  );
 }
