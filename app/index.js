@@ -1,19 +1,5 @@
-import { useEffect } from "react";
-import {
-  Link,
-  Stack,
-  useNavigation,
-  useRouter,
-  useSearchParams,
-} from "expo-router";
-import {
-  Image,
-  Text,
-  View,
-  FlatList,
-  Pressable,
-  StyleSheet,
-} from "react-native";
+import { Stack, useRouter } from "expo-router";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 
 const items = [
   { id: "1", title: "Item 1" },
@@ -37,6 +23,7 @@ export default function Home() {
         })
       }
     >
+      <View style={{ backgroundColor: "white", width: 100, height: 100, marginRight: 4 }}></View>
       <Text style={styles.itemText}>{item.title}</Text>
     </Pressable>
   );
@@ -52,9 +39,7 @@ export default function Home() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          // https://reactnavigation.org/docs/headers#setting-the-header-title
           title: "Disco Gallery",
-          // https://reactnavigation.org/docs/headers#adjusting-header-styles
           headerStyle: { backgroundColor: "#f4511e" },
           headerTintColor: "#fff",
           headerTitleStyle: {
@@ -62,13 +47,6 @@ export default function Home() {
           },
         }}
       />
-
-      <Text>Home Screen</Text>
-
-      <Link href={{ pathname: "details", params: { name: "Bacon" } }}>
-        Go to Details
-      </Link>
-      <Text styles={styles.header}>List of artwork</Text>
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -83,16 +61,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
+    padding: 16,
   },
   itemContainer: {
-    backgroundColor: "blue",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "pink",
     padding: 15,
-    borderRadius: 5,
     marginBottom: 10,
   },
   itemText: {

@@ -4,7 +4,6 @@ import { Stack, useSearchParams, useRouter } from "expo-router";
 export default function Details() {
   const router = useRouter();
   const params = useSearchParams();
-  console.log('P', params);
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
