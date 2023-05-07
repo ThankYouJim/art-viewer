@@ -23,11 +23,11 @@ export default function Details() {
         style={{
           flex: 1,
           backgroundColor: "white",
-          maxHeight: "50%",
+          maxHeight: "30%",
           paddingHorizontal: 16,
         }}
       />
-      <View style={{ flex: 1, paddingHorizontal: 8 }}>
+      <View style={{ paddingHorizontal: 8 }}>
         <Text
           style={{
             fontSize: 32,
