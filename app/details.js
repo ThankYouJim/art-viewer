@@ -13,19 +13,9 @@ export default function Details() {
   useEffect(() => {
     if (params.id) {
       setArtwork(artworks[params.id]);
+      dispatch(fetchArtwork(params.id));
     }
   }, [params]);
-
-  //useEffect(() => {
-  //  if (params.id) {
-  //    dispatch(fetchArtwork(params.id));
-  //  }
-  //  //
-  //  if (params.artist_display) {
-  //    const artwork = artworks.find((item) => item.id === params.id);
-  //    setArtwork(artwork);
-  //  }
-  //}, [params, dispatch]);
 
   if (!artwork) {
     return <Text>Loading...</Text>;
