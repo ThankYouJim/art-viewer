@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import { Stack, useRouter } from "expo-router";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArtworks } from "../redux/artworkSlice";
-
-const items = [
-  { id: "1", title: "Item 1" },
-  { id: "2", title: "Item 2" },
-  { id: "3", title: "Item 3" },
-];
 
 export default function Home() {
   const router = useRouter();
@@ -26,19 +27,20 @@ export default function Home() {
           params: {
             name: item.title,
             title: item.title,
-            author: item.author_display
+            author: item.author_display,
           },
         })
       }
     >
-      <View
+      <Image
+        source={{ uri: item.image }}
         style={{
           backgroundColor: "white",
           width: 100,
           height: 100,
           marginRight: 8,
         }}
-      ></View>
+      ></Image>
       <Text style={styles.itemText}>{item.title}</Text>
     </Pressable>
   );

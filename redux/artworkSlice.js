@@ -5,10 +5,15 @@ export const fetchArtworks = createAsyncThunk(
   async () => {
     // just get 6 same ones for now
     const response = await fetch(
-      "https://api.artic.edu/api/v1/artworks?page=1&limit=6&field=id,title,artist_display,image_id"
+      "https://api.artic.edu/api/v1/artworks?page=1&limit=6&fields=id,title,artist_display,image_id"
     );
-    const data = await response.json();
-    return data.data;
+    const raw = await response.json();
+    const { data, config } = raw;
+    const parsed = data.map((artwork) => ({
+      ...artwork,
+      image: `${config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`,
+    }));
+    return parsed;
   }
 );
 
