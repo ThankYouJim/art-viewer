@@ -39,7 +39,7 @@ export default function Home() {
           marginRight: 8,
         }}
       ></Image>
-      <Text style={styles.itemText}>{item.title}</Text>
+      <Text>{item.title}</Text>
     </Pressable>
   );
 
@@ -54,8 +54,6 @@ export default function Home() {
       <Stack.Screen
         options={{
           title: "Disco Gallery",
-          headerStyle: { backgroundColor: "#f4511e" },
-          headerTintColor: "#fff",
           headerTitleStyle: {
             fontWeight: "bold",
           },
@@ -74,16 +72,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "lightblue",
+    backgroundColor: "lightfrey",
   },
   itemContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "pink",
+    backgroundColor: "white",
     marginBottom: 10,
     borderRadius: 8,
-  },
-  itemText: {
-    color: "white",
-  },
+  }
 });

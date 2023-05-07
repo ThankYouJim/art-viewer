@@ -8,10 +8,6 @@ export default function Root() {
       <Stack
         initialRouteName="home"
         screenOptions={{
-          headerStyle: {
-            backgroundColor: "forestgreen",
-          },
-          headerTintColor: "#fff",
           headerTitleStyle: {
             fontWeight: "bold",
           },
