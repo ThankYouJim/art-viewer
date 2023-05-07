@@ -22,31 +22,38 @@ const items = [
 ];
 
 export default function Home() {
-  const { post } = useSearchParams();
+  //const { post } = useSearchParams();
   const router = useRouter();
 
   const renderItem = ({ item }) => (
     <Pressable
       style={styles.itemContainer}
-      onPress={() => router.push("details", { title: item.title })}
+      onPress={() =>
+        router.push({
+          pathname: "details",
+          params: {
+            name: item.title,
+          },
+        })
+      }
     >
       <Text style={styles.itemText}>{item.title}</Text>
     </Pressable>
   );
 
-  useEffect(() => {
-    if (post) {
-      // Post updated, do something with `post`
-      // For example, send the post to the server
-    }
-  }, [post]);
+  //useEffect(() => {
+  //  if (post) {
+  //    // Post updated, do something with `post`
+  //    // For example, send the post to the server
+  //  }
+  //}, [post]);
 
   return (
     <View style={styles.container}>
       <Stack.Screen
         options={{
           // https://reactnavigation.org/docs/headers#setting-the-header-title
-          title: "My home",
+          title: "Disco Gallery",
           // https://reactnavigation.org/docs/headers#adjusting-header-styles
           headerStyle: { backgroundColor: "#f4511e" },
           headerTintColor: "#fff",
