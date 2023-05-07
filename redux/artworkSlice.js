@@ -11,6 +11,7 @@ export const fetchArtworks = createAsyncThunk(
     const { data, config } = raw;
     const parsed = data.map((artwork) => ({
       ...artwork,
+      id: String(artwork.id),
       image: `${config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`,
     }));
     return parsed;

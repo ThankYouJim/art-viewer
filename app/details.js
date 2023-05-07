@@ -1,18 +1,34 @@
+import { useState, useEffect } from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Stack, useSearchParams } from "expo-router";
+import { useSelector } from "react-redux";
 
 export default function Details() {
+  const artworks = useSelector((state) => state.artworks.items);
   const params = useSearchParams();
+  const [artwork, setArtwork] = useState();
+
+  useEffect(() => {
+    if (params.id) {
+      const artwork = artworks.find((item) => item.id === params.id);
+      console.log('get', artwork);
+      setArtwork(artwork);
+    }
+  }, [params.id]);
+
+  if (!artwork) {
+    return <Text>Loading...</Text>
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: "lightgrey" }}>
       <Stack.Screen
         options={{
-          title: params.title,
+          title: artwork.title,
         }}
       />
       <Image
-        source={{ uri: params.uri }}
+        source={{ uri: artwork.image }}
         style={{
           flex: 1,
           backgroundColor: "white",
@@ -29,7 +45,7 @@ export default function Details() {
             marginVertical: 12,
           }}
         >
-          {params.title}
+          {artwork.title}
         </Text>
       </View>
       <ScrollView
@@ -42,7 +58,7 @@ export default function Details() {
         }}
       >
         <Text style={{ fontSize: 16 }}>
-          {params.artist}
+          {artwork.artist}
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           hendrerit nisl nec dui malesuada, quis laoreet ipsum sodales. Donec
           dignissim magna sit amet libero pharetra, sed convallis nunc
