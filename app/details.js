@@ -1,20 +1,27 @@
 import { useState, useEffect } from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Stack, useSearchParams } from "expo-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchArtwork } from "../redux/artworkSlice";
 
 export default function Details() {
   const artworks = useSelector((state) => state.artworks.items);
+  const dispatch = useDispatch();
   const params = useSearchParams();
   const [artwork, setArtwork] = useState();
 
   useEffect(() => {
+    console.log('PPPPP', params);
+    // Fetch more data
     if (params.id) {
+      dispatch(fetchArtwork(params.id));
+    }
+    // 
+    if (params.artist_display) {
       const artwork = artworks.find((item) => item.id === params.id);
-      console.log("get", artwork);
       setArtwork(artwork);
     }
-  }, [params.id]);
+  }, [params, dispatch]);
 
   if (!artwork) {
     return <Text>Loading...</Text>;

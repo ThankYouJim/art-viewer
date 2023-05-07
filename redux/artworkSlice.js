@@ -5,7 +5,7 @@ export const fetchArtworks = createAsyncThunk(
   async () => {
     // just get 6 same ones for now
     const response = await fetch(
-      "https://api.artic.edu/api/v1/artworks?page=1&limit=6&fields=id,title,artist_display,image_id"
+      "https://api.artic.edu/api/v1/artworks?page=1&limit=6&fields=id,title,image_id"
     );
     const raw = await response.json();
     const { data, config } = raw;
@@ -15,6 +15,22 @@ export const fetchArtworks = createAsyncThunk(
       image: `${config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`,
     }));
     return parsed;
+  }
+);
+
+export const fetchArtwork = createAsyncThunk(
+  "artworks/fetchArtwork",
+  async (id) => {
+    const response = await fetch(
+      `https://api.artic.edu/api/v1/artworks/${id}?fields=id,title,artist_display,image_id`
+    );
+    const raw = await response.json();
+    const { data, config } = raw;
+    return {
+      ...data,
+      id: String(data.id),
+      image: `${config.iiif_url}/${data.image_id}/full/843,/0/default.jpg`,
+    };
   }
 );
 
@@ -28,6 +44,14 @@ const artworksSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchArtwork.fulfilled, (state, action) => {
+        // Gross way of replacing item
+        const index = state.items.find((item) => item.id === action.payload.id);
+        console.log("found!", index);
+        const replaced = state.items;
+        replaced[index] = action.payload;
+        state.items = replaced;
+      })
       .addCase(fetchArtworks.pending, (state) => {
         state.status = "loading";
       })
