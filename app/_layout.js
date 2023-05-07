@@ -1,27 +1,18 @@
 import { Stack } from "expo-router";
-import { Details } from "./details";
 
-export default function HomeLayout() {
+export default function Layout() {
   return (
     <Stack
-      initialRouteName="index"
+      initialRouteName="home"
       screenOptions={{
         headerStyle: {
           backgroundColor: "forestgreen",
         },
-        headerTintColor: "white",
+        headerTintColor: "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
         },
       }}
-    >
-      <Stack.Screen
-        name="index"
-        options={{
-          title: "Welcome",
-        }}
-      />
-      {/*<Stack.Screen name="details" />*/}
-    </Stack>
+    />
   );
 }
