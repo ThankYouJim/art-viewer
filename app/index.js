@@ -25,9 +25,7 @@ export default function Home() {
         router.push({
           pathname: "details",
           params: {
-            name: item.title,
-            title: item.title,
-            author: item.author_display,
+            id: item.id,
           },
         })
       }

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { Stack, useSearchParams } from "expo-router";
 
 export default function Details() {
@@ -8,10 +8,11 @@ export default function Details() {
     <View style={{ flex: 1, backgroundColor: "lightgrey" }}>
       <Stack.Screen
         options={{
-          title: params.name,
+          title: params.title,
         }}
       />
-      <View
+      <Image
+        source={{ uri: params.uri }}
         style={{
           flex: 1,
           backgroundColor: "white",
@@ -41,7 +42,7 @@ export default function Details() {
         }}
       >
         <Text style={{ fontSize: 16 }}>
-          {params.author}
+          {params.artist}
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           hendrerit nisl nec dui malesuada, quis laoreet ipsum sodales. Donec
           dignissim magna sit amet libero pharetra, sed convallis nunc
