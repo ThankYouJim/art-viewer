@@ -14,7 +14,7 @@ import { fetchArtworks } from "../redux/artworkSlice";
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const artworks = useSelector((state) => state.artworks.items);
+  const artworks = useSelector((state) => Object.values(state.artworks.items));
   const status = useSelector((state) => state.artworks.status);
   const error = useSelector((state) => state.artworks.error);
 
@@ -80,5 +80,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginBottom: 10,
     borderRadius: 8,
-  }
+  },
 });

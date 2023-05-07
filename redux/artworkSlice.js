@@ -9,11 +9,17 @@ export const fetchArtworks = createAsyncThunk(
     );
     const raw = await response.json();
     const { data, config } = raw;
-    const parsed = data.map((artwork) => ({
-      ...artwork,
-      id: String(artwork.id),
-      image: `${config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`,
-    }));
+    const parsed = data.reduce(
+      (callback, artwork) => ({
+        ...callback,
+        [artwork.id]: {
+          ...artwork,
+          id: String(artwork.id),
+          image: `${config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`,
+        },
+      }),
+      {}
+    );
     return parsed;
   }
 );
@@ -27,9 +33,11 @@ export const fetchArtwork = createAsyncThunk(
     const raw = await response.json();
     const { data, config } = raw;
     return {
-      ...data,
-      id: String(data.id),
-      image: `${config.iiif_url}/${data.image_id}/full/843,/0/default.jpg`,
+      [data.id]: {
+        ...data,
+        id: String(data.id),
+        image: `${config.iiif_url}/${data.image_id}/full/843,/0/default.jpg`,
+      },
     };
   }
 );
@@ -37,7 +45,7 @@ export const fetchArtwork = createAsyncThunk(
 const artworksSlice = createSlice({
   name: "artworks",
   initialState: {
-    items: [],
+    items: {},
     status: "idle",
     error: null,
   },
@@ -45,12 +53,7 @@ const artworksSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchArtwork.fulfilled, (state, action) => {
-        // Gross way of replacing item
-        const index = state.items.find((item) => item.id === action.payload.id);
-        console.log("found!", index);
-        const replaced = state.items;
-        replaced[index] = action.payload;
-        state.items = replaced;
+        state.items = { ...state.items, ...action.payload };
       })
       .addCase(fetchArtworks.pending, (state) => {
         state.status = "loading";

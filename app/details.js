@@ -11,17 +11,21 @@ export default function Details() {
   const [artwork, setArtwork] = useState();
 
   useEffect(() => {
-    console.log('PPPPP', params);
-    // Fetch more data
     if (params.id) {
-      dispatch(fetchArtwork(params.id));
+      setArtwork(artworks[params.id]);
     }
-    // 
-    if (params.artist_display) {
-      const artwork = artworks.find((item) => item.id === params.id);
-      setArtwork(artwork);
-    }
-  }, [params, dispatch]);
+  }, [params]);
+
+  //useEffect(() => {
+  //  if (params.id) {
+  //    dispatch(fetchArtwork(params.id));
+  //  }
+  //  //
+  //  if (params.artist_display) {
+  //    const artwork = artworks.find((item) => item.id === params.id);
+  //    setArtwork(artwork);
+  //  }
+  //}, [params, dispatch]);
 
   if (!artwork) {
     return <Text>Loading...</Text>;
