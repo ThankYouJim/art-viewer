@@ -1,8 +1,7 @@
 import { View, Text, ScrollView } from "react-native";
-import { Stack, useSearchParams, useRouter } from "expo-router";
+import { Stack, useSearchParams } from "expo-router";
 
 export default function Details() {
-  const router = useRouter();
   const params = useSearchParams();
 
   return (
@@ -12,13 +11,6 @@ export default function Details() {
           title: params.name,
         }}
       />
-      {/*<Text
-        onPress={() => {
-          router.setParams({ name: "Updated" });
-        }}
-      >
-        Update the title
-      </Text>*/}
       <View
         style={{
           flex: 1,
@@ -36,7 +28,7 @@ export default function Details() {
             marginVertical: 12,
           }}
         >
-          {params.name}
+          {params.title}
         </Text>
       </View>
       <ScrollView
@@ -49,6 +41,7 @@ export default function Details() {
         }}
       >
         <Text style={{ fontSize: 16 }}>
+          {params.author}
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           hendrerit nisl nec dui malesuada, quis laoreet ipsum sodales. Donec
           dignissim magna sit amet libero pharetra, sed convallis nunc

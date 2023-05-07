@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { Stack, useRouter } from "expo-router";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchArtworks } from "../redux/artworkSlice";
 
 const items = [
   { id: "1", title: "Item 1" },
@@ -8,8 +11,11 @@ const items = [
 ];
 
 export default function Home() {
-  //const { post } = useSearchParams();
   const router = useRouter();
+  const dispatch = useDispatch();
+  const artworks = useSelector((state) => state.artworks.items);
+  const status = useSelector((state) => state.artworks.status);
+  const error = useSelector((state) => state.artworks.error);
 
   const renderItem = ({ item }) => (
     <Pressable
@@ -19,21 +25,29 @@ export default function Home() {
           pathname: "details",
           params: {
             name: item.title,
+            title: item.title,
+            author: item.author_display
           },
         })
       }
     >
-      <View style={{ backgroundColor: "white", width: 100, height: 100, marginRight: 4 }}></View>
+      <View
+        style={{
+          backgroundColor: "white",
+          width: 100,
+          height: 100,
+          marginRight: 8,
+        }}
+      ></View>
       <Text style={styles.itemText}>{item.title}</Text>
     </Pressable>
   );
 
-  //useEffect(() => {
-  //  if (post) {
-  //    // Post updated, do something with `post`
-  //    // For example, send the post to the server
-  //  }
-  //}, [post]);
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchArtworks());
+    }
+  }, [status, dispatch]);
 
   return (
     <View style={styles.container}>
@@ -48,7 +62,7 @@ export default function Home() {
         }}
       />
       <FlatList
-        data={items}
+        data={artworks}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
@@ -59,17 +73,15 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //alignItems: "center",
-    //justifyContent: "center",
     padding: 16,
-    backgroundColor: "lightblue"
+    backgroundColor: "lightblue",
   },
   itemContainer: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "pink",
-    padding: 15,
     marginBottom: 10,
+    borderRadius: 8,
   },
   itemText: {
     color: "white",
