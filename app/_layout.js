@@ -1,8 +1,10 @@
 import { Stack } from "expo-router";
+import { Details } from "./details";
 
 export default function HomeLayout() {
   return (
     <Stack
+      initialRouteName="index"
       screenOptions={{
         headerStyle: {
           backgroundColor: "forestgreen",
@@ -19,6 +21,7 @@ export default function HomeLayout() {
           title: "Welcome",
         }}
       />
+      {/*<Stack.Screen name="details" />*/}
     </Stack>
   );
 }

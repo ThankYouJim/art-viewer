@@ -1,20 +1,13 @@
 import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Button,
-  View,
-  Image,
-  Pressable,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import { useRouter } from "expo-router";
 import Card from "./CardComponent";
 
 export default function App() {
   const navigation = useRouter();
   const [artwork, setArtwork] = useState({});
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState();
 
   getOne = async () => {
     fetch(
@@ -47,43 +40,50 @@ export default function App() {
     return imageURL;
   };
 
+  renderItems = ({ item }) => (
+    <Pressable
+      onPress={() =>
+        navigation.push("/details", {
+          uri: 'pls',
+          title: 'ahhhh',
+        })
+      }
+    >
+      <Card uri={item.imageURL} title={item.title} />
+    </Pressable>
+  );
+
   useEffect(() => {
     //getOne();
     getSome();
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Pressable
-          onPress={() =>
-            navigation.push("/details", {
-              uri: artwork.imageURL,
-              title: artwork.title,
-            })
-          }
-        ></Pressable>
-        <FlatList
-          data={artworks}
-          renderItem={({ item }) => (
-            <Card uri={item.imageURL} title={item.title} />
+    <>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          {artwork ? (
+            <FlatList
+              data={artworks}
+              renderItem={renderItems}
+              keyExtractor={(item) => item.id}
+            />
+          ) : (
+            <Text>Nothing yet!</Text>
           )}
-          keyExtractor={(item) => item.id}
-        />
+        </View>
+        <StatusBar style="auto" />
       </View>
-      <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    flexWrap: 'wrap',
-    backgroundColor: "#25292e",
+    //backgroundColor: "#25292e",
     alignItems: "center",
     color: "white",
-    padding: 16
+    padding: 16,
   },
 });
