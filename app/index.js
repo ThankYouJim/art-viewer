@@ -16,7 +16,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const artworks = useSelector((state) => Object.values(state.artworks.items));
   const status = useSelector((state) => state.artworks.status);
-  const error = useSelector((state) => state.artworks.error);
 
   const renderItem = ({ item }) => (
     <Pressable
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "lightfrey",
   },
   itemContainer: {
     flexDirection: "row",

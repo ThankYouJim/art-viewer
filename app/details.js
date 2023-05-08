@@ -1,28 +1,41 @@
 import { useState, useEffect } from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Stack, useSearchParams } from "expo-router";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchArtwork } from "../redux/artworkSlice";
 
 export default function Details() {
-  const artworks = useSelector((state) => state.artworks.items);
-  const dispatch = useDispatch();
-  const params = useSearchParams();
   const [artwork, setArtwork] = useState();
+  const { id } = useSearchParams();
+
+  getArtwork = async (id) => {
+    const response = await fetch(
+      `https://api.artic.edu/api/v1/artworks/${id}?fields=id,title,artist_display,image_id,date_start,date_end,`
+    );
+    const raw = await response.json();
+    const { data, config } = raw;
+    setArtwork({
+      ...data,
+      id: String(data.id),
+      image: `${config.iiif_url}/${data.image_id}/full/843,/0/default.jpg`,
+    });
+  };
 
   useEffect(() => {
-    if (params.id) {
-      setArtwork(artworks[params.id]);
-      dispatch(fetchArtwork(params.id));
-    }
-  }, [params]);
+    if (id) getArtwork(id);
+  }, [id]);
 
   if (!artwork) {
     return <Text>Loading...</Text>;
   }
 
+  console.log("??", artwork);
+
+  const Dates =
+    artwork.date_end - artwork.date_state
+      ? `${artwork.date_start} - ${artwork.date_end}`
+      : artwork.date_end;
+
   return (
-    <View style={{ flex: 1, backgroundColor: "lightgrey" }}>
+    <View style={{ flex: 1 }}>
       <Stack.Screen
         options={{
           title: artwork.title,
@@ -46,18 +59,23 @@ export default function Details() {
           borderRadius: 16,
         }}
       >
-        <View style={{ fontSize: 16 }}>
-          <Text
-            style={{
-              fontSize: 24,
-              fontWeight: "bold",
-              lineHeight: 24,
-              marginVertical: 12,
-            }}
+        <View>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            {artwork.artist_display}
-          </Text>
-          <Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontStyle: "italic",
+              }}
+            >
+              {artwork.title} ({Dates})
+            </Text>
+            <Text style={{ fontWeight: "bold", textAlign: "right" }}>
+              {artwork.artist_display}
+            </Text>
+          </View>
+          <Text style={{ marginTop: 8 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
             hendrerit nisl nec dui malesuada, quis laoreet ipsum sodales. Donec
             dignissim magna sit amet libero pharetra, sed convallis nunc
