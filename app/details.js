@@ -27,15 +27,13 @@ export default function Details() {
     return <Text>Loading...</Text>;
   }
 
-  console.log("??", artwork);
-
   const Dates =
     artwork.date_end - artwork.date_state
       ? `${artwork.date_start} - ${artwork.date_end}`
       : artwork.date_end;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: 'lightgrey' }}>
       <Stack.Screen
         options={{
           title: artwork.title,
@@ -46,8 +44,7 @@ export default function Details() {
         style={{
           flex: 1,
           backgroundColor: "white",
-          maxHeight: "30%",
-          paddingHorizontal: 16,
+          minHeight: "30%",
         }}
       />
       <ScrollView
@@ -75,7 +72,7 @@ export default function Details() {
               {artwork.artist_display}
             </Text>
           </View>
-          <Text style={{ marginTop: 8 }}>
+          <Text style={{ marginTop: 12 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
             hendrerit nisl nec dui malesuada, quis laoreet ipsum sodales. Donec
             dignissim magna sit amet libero pharetra, sed convallis nunc
